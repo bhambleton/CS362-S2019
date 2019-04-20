@@ -1239,7 +1239,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 void handleAdventurer(struct gameState *state, int currentPlayer, int nextPlayer){
   	int temphand[MAX_HAND];
-  	int drawntreasure=0;
+  	int drawntreasure=1;
   	int cardDrawn;
 	int z = 0;
 
@@ -1267,7 +1267,7 @@ void handleAdventurer(struct gameState *state, int currentPlayer, int nextPlayer
 
 void handleSmithy(struct gameState *state, int currentPlayer, int handPos){
       int i = 0;
-      for (i = 0; i < 3; i++)
+      for (i = 0; i < 2; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -1283,7 +1283,7 @@ void handleSeaHag(struct gameState *state, int currentPlayer){
     for (i = 0; i < state->numPlayers; i++){
 	if (i != currentPlayer){
 	  state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    state->deckCount[i]--;
-	  state->discardCount[i]++;
+	  //state->discardCount[i]++;
 	  state->deck[i][state->deckCount[i]--] = curse;//Top card now a curse
 	}
       }
@@ -1326,7 +1326,7 @@ void handleCutpurse(struct gameState *state, int currentPlayer, int handPos){
 
 void handleOutpost(struct gameState *state, int currentPlayer, int handPos){
       //set outpost flag
-      state->outpostPlayed++;
+      //state->outpostPlayed++;
 			
       //discard card
       discardCard(handPos, currentPlayer, state, 0);
