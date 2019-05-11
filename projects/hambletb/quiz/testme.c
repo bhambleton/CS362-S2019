@@ -12,7 +12,15 @@ char inputChar()
 char *inputString()
 {
     // TODO: rewrite this function
-    return "reset\0";
+    char rand_string[6]; memset(rand_string, '\0', sizeof(rand_string));
+	int i;
+	rand_string[0] = 'r';
+	for(i = 1; i < 5; i++){
+		rand_string[i] = (rand() % 26) + 97;
+	}
+
+	return rand_string;
+    //return "reset\0";
 }
 
 void testme()
