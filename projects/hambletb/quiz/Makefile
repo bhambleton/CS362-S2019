@@ -4,7 +4,7 @@ testme: testme.c
 	gcc -o testme testme.c -g $(CFLAGS)
 	./testme
 
-all: testme runtests
+all: testme
 
 clean:
 	rm -f *.gcov *.gcda *.gcno testme
