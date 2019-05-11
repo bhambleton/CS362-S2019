@@ -6,13 +6,13 @@
 char inputChar()
 {
     // TODO: rewrite this function
-    return ' ';
+    return (char)((rand() % 94) + 32);
 }
 
 char *inputString()
 {
     // TODO: rewrite this function
-    return "";
+    return "reset\0";
 }
 
 void testme()
