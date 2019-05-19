@@ -2,6 +2,7 @@
 #include "dominion_helpers.h"
 #include "rngs.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
@@ -17,14 +18,15 @@ int main(int argc, char* argv[]){
 
 
 	for(i = 0; i < 2400; i++) {
-	    	player_num = floor(Random() * 4);
+	    	printf("Test %d\n", i);
+	    	player_num = (rand() % MAX_PLAYERS)+1;
+
 		initializeGame(player_num, k, 1, &Game);
-	
 		Game.deckCount[player_num] = floor(Random() * MAX_DECK);
 		Game.handCount[player_num] = floor(Random() * MAX_HAND);
-		Game.discardCount[player_num] = floor(Random() * MAX_DECK);
 	
 		checkAdventurerCard(player_num, &Game);
+		printf("\n");
 	}
 
 	printf("\t~Random testing complete~\n");
@@ -60,13 +62,24 @@ int checkAdventurerCard(int p_num, struct gameState* post){
 	}
 
 	//3 cards added + 1 discarded
-	assert(num_treasure_post-num_treasure_pre==2);
+	//assert(num_treasure_post-num_treasure_pre==2);
+	if(num_treasure_post-num_treasure_pre != 2){
+		printf("Error: number of treasure cards added is incorrect\n");
+		printf("\tTreasure cards added: %d, Expected 2\n", num_treasure_post-num_treasure_pre);
+	}
 	//handCount after should be greater than 
 	//	handCount before handleAdventurer call
-	assert(pre.handCount[p_num] < post->handCount[p_num]);
+	//assert(pre.handCount[p_num] < post->handCount[p_num]);
+	if(!(pre.handCount[p_num] < post->handCount[p_num])){
+		printf("Error: number of cards added to hand incorrect\n");
+		printf("\tCards added: %d, Expected: 2\n", post->handCount[p_num]-pre.handCount[p_num]);
+	}
 	//deckCount after should be less than 
 	//	deckCount before handleAdventurer call
-	assert(pre.deckCount[p_num] > post->deckCount[p_num]);
+	//assert(pre.deckCount[p_num] > post->deckCount[p_num]);
+	if(!(pre.deckCount[p_num] > post->deckCount[p_num])){
+		printf("Error: number of cards removed from deck incorrect\n");
+	}
 
 	return 0;
 }

@@ -17,17 +17,16 @@ int main(int argc, char* argv[]){
 
 
 	for(i = 0; i < 2400; i++) {
-	    	player_num = floor(Random() * 4);
+	    	printf("Test %d\n", i);
+
+	    	player_num = (rand() % MAX_PLAYERS)+1;
+
 		initializeGame(player_num, k, 1, &Game);
-	
 		Game.deckCount[player_num] = floor(Random() * MAX_DECK);
 		Game.handCount[player_num] = floor(Random() * MAX_HAND);
-		Game.discardCount[player_num] = floor(Random() * MAX_DECK);
-	
-		//Top card from hand becomes smithy card.	
-		Game.hand[player_num][Game.handCount[player_num]--] = smithy;
 		
 		checkSmithyCard(player_num, &Game);
+		printf("\n");
 	}
 	
 	printf("\t~Random testing complete~\n");
@@ -41,11 +40,16 @@ int checkSmithyCard(int p_num, struct gameState* post){
 	memcpy(&pre, post, sizeof(struct gameState));
 	
 	//call function to execute functionality for Smithy card
-	handleSmithy(post, p_num, post->handCount[p_num]--);
+	handleSmithy(post, p_num, 0);
 
 	//ensure correct functionality of handleSmity
-	assert(pre.handCount[p_num] < post->handCount[p_num]);
-	assert(pre.deckCount[p_num] > post->deckCount[p_num]);
+
+	//assert(pre.deckCount[p_num] > post->deckCount[p_num]);
+	if(!(pre.deckCount[p_num] > post->deckCount[p_num])){
+		printf("Error: incorrect number of cards removed from deck\n");
+		printf("\tNumber removed: %d, Expected: 3\n)", pre.deckCount[p_num]-post->deckCount[p_num]);
+	}
+
 
 	//Smithy card adds 3 cards to hand from deck and discards 1 card from hand
 	pre_handCount = pre.handCount[p_num];
@@ -53,7 +57,12 @@ int checkSmithyCard(int p_num, struct gameState* post){
 
 	//handCount should increase by 2 (3 random cards from deck added, 
 	//	smithy card discarded)
-	assert(post_handCount - pre_handCount == 2);
+	//assert(post_handCount - pre_handCount == 2);
+	if(post_handCount - pre_handCount != 2){
+		printf("Error: incorrect number of cards added to hand\n");
+		printf("\tNumber added: %d, Expected: 2\n", post_handCount-pre_handCount);
+	}
+
 
 	return 0;
 }
