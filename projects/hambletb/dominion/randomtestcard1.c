@@ -67,6 +67,7 @@ int checkAdventurerCard(int p_num, struct gameState* post){
 		printf("Error: number of treasure cards added is incorrect\n");
 		printf("\tTreasure cards added: %d, Expected 2\n", num_treasure_post-num_treasure_pre);
 	}
+	else{ printf("Treasure card count test Passed\n"); }
 	//handCount after should be greater than 
 	//	handCount before handleAdventurer call
 	//assert(pre.handCount[p_num] < post->handCount[p_num]);
@@ -74,12 +75,14 @@ int checkAdventurerCard(int p_num, struct gameState* post){
 		printf("Error: number of cards added to hand incorrect\n");
 		printf("\tCards added: %d, Expected: 2\n", post->handCount[p_num]-pre.handCount[p_num]);
 	}
+	else{ printf("Hand  count test Passed\n"); }
 	//deckCount after should be less than 
 	//	deckCount before handleAdventurer call
 	//assert(pre.deckCount[p_num] > post->deckCount[p_num]);
 	if(!(pre.deckCount[p_num] > post->deckCount[p_num])){
 		printf("Error: number of cards removed from deck incorrect\n");
 	}
+	else{ printf("Deck count test Passed\n"); }
 
 	return 0;
 }

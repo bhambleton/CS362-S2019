@@ -41,11 +41,17 @@ randomtest2: randomtestcard2.c dominion.o rngs.o
 randomtest3: randomtestcard3.c dominion.o rngs.o
 	gcc -o randomtest3 -g randomtestcard3.c dominion.o rngs.o $(CFLAGS)
 
-randomtestresults: randomtest1
-	echo "randomtestcard1.c" > randomtestresults.out
-	./randomtest1 &> randomtestresults.out
+randomtestresults: dominion.o rngs.o randomtest1 randomtest2 randomtest3
+	echo "~~~randomtestcard1.c~~~" > randomtestresults.out
+	./randomtest1 &>> randomtestresults.out
 	gcov randomtestcard1.c >> randomtestresults.out
-	
+	echo "~~~randomtestcard2.c~~~" >> randomtestresults.out
+	./randomtest2 &>> randomtestresults.out
+	gcov randomtestcard2.c >> randomtestresults.out
+	echo "~~~randomtestcard3.c~~~" >> randomtestresults.out
+	./randomtest3 &>> randomtestresults.out
+	gcov randomtestcard3.c >> randomtestresults.out
+
 	
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)

@@ -15,6 +15,8 @@ int main(int argc, char* argv[]){
 
 	printf("\t~Random test on Smithy card~\n");
 
+	SelectStream(2);
+	PutSeed(3);
 
 	for(i = 0; i < 2400; i++) {
 	    	printf("Test %d\n", i);
@@ -24,8 +26,10 @@ int main(int argc, char* argv[]){
 		initializeGame(player_num, k, 1, &Game);
 		Game.deckCount[player_num] = floor(Random() * MAX_DECK);
 		Game.handCount[player_num] = floor(Random() * MAX_HAND);
-		
+		Game.discardCount[player_num] = floor(Random() * MAX_DECK);	
+	
 		checkSmithyCard(player_num, &Game);
+		
 		printf("\n");
 	}
 	
@@ -37,6 +41,8 @@ int main(int argc, char* argv[]){
 int checkSmithyCard(int p_num, struct gameState* post){
 	struct gameState pre;
 	int pre_handCount = 0, post_handCount = 0;
+	int pre_discardC = 0, post_discardC = 0;
+
 	memcpy(&pre, post, sizeof(struct gameState));
 	
 	//call function to execute functionality for Smithy card
@@ -49,6 +55,7 @@ int checkSmithyCard(int p_num, struct gameState* post){
 		printf("Error: incorrect number of cards removed from deck\n");
 		printf("\tNumber removed: %d, Expected: 3\n)", pre.deckCount[p_num]-post->deckCount[p_num]);
 	}
+	else { printf("Deck count Test Passed\n"); }
 
 
 	//Smithy card adds 3 cards to hand from deck and discards 1 card from hand
@@ -62,7 +69,17 @@ int checkSmithyCard(int p_num, struct gameState* post){
 		printf("Error: incorrect number of cards added to hand\n");
 		printf("\tNumber added: %d, Expected: 2\n", post_handCount-pre_handCount);
 	}
+	else { printf("Hand count test Passed\n"); }
 
+	pre_discardC = pre.discardCount[p_num];
+	post_discardC = post->discardCount[p_num];
+
+	//discardCount should increase by 1 for the discarded Smithy card
+	if(pre_discardC >= post_discardC){
+	    printf("Error: incorrect number of cards added to discard\n");
+	    printf("\tNumber added: %d\n\tExpected: 1\n", post_discardC-pre_discardC);
+	}
+	else { printf("Discard count test Passed\n"); }
 
 	return 0;
 }

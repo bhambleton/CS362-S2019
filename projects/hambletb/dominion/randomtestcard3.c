@@ -54,11 +54,30 @@ int checkSeahagCard(int p_num, struct gameState* post){
 			if(post->deck[i][post->deckCount[i]--] != curse){
 				printf("Error: top card of player %d is not a curse\n", i);
 			}
+			else{ printf("Top card of deck test Passed\n"); }
+			
 			if(pre.deckCount[i] >= post->deckCount[i]){
 				printf("Error: incorrect number of cards removed from player %d's deck\n", i);
 				printf("\tDeck Count before: %d\n\tDeck Count after: %d\n", pre.deckCount[i],
 					post->deckCount[i]);
 			}
+			else{ printf("Deck count test Passed\n"); }
+
+			if(pre.discardCount[i] >= post->discardCount[i]){
+				printf("Error: incorrect number of cards added to discard\n");
+				printf("\tDiscard Count before: %d\n\tDiscard Count after: %d\n", pre.discardCount[i],
+				       	post->discardCount[i]);
+			}
+			else{ printf("Discard count test Passed\n"); }
+		}
+		//check discardCount of player who played sea hag card
+		else if (i == p_num){
+			if(pre.discardCount[i] >= post->discardCount[i]){
+				printf("Error: sea hag card not discarded properly from player's hand\n");
+				printf("\tDiscard Count before: %d\n\tDiscard Count after: %d\n", pre.discardCount[i],
+				       	post->discardCount[i]);
+			}
+			else{ printf("Discard count test Passed\n"); }
 		}
 	}
 
