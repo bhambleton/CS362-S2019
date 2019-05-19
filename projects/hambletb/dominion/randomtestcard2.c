@@ -5,7 +5,7 @@
 #include <string.h>
 #include <assert.h>
 
-int checkSmithyCard(int, struct gameState);
+int checkSmithyCard(int, struct gameState*);
 
 int main(int argc, char* argv[]){
 	int i, j, player_num;
@@ -13,34 +13,47 @@ int main(int argc, char* argv[]){
 			smithy, village, cutpurse, sea_hag};
 	struct gameState Game;
 
-	printf("Testing adventurer card\n");
+	printf("\t~Random test on Smithy card~\n");
 
 
 	for(i = 0; i < 2400; i++) {
 	    	player_num = floor(Random() * 4);
-		initializeGame(player_num, k, 1, Game);
+		initializeGame(player_num, k, 1, &Game);
 	
 		Game.deckCount[player_num] = floor(Random() * MAX_DECK);
-		Game.handCount[person_num] = floor(Random() * MAX_HAND);
-		Game.discardCount[person_num] = floor(Random() * MAX_DECK);
+		Game.handCount[player_num] = floor(Random() * MAX_HAND);
+		Game.discardCount[player_num] = floor(Random() * MAX_DECK);
+	
+		//Top card from hand becomes smithy card.	
+		Game.hand[player_num][Game.handCount[player_num]--] = smithy;
+		
 		checkSmithyCard(player_num, &Game);
 	}
+	
+	printf("\t~Random testing complete~\n");
 	
 	return 0;
 }
 
 int checkSmithyCard(int p_num, struct gameState* post){
-	int result;
-
 	struct gameState pre;
-
-	memcpy(pre, post, sizeof(struct gameState));
+	int pre_handCount = 0, post_handCount = 0;
+	memcpy(&pre, post, sizeof(struct gameState));
 	
 	//call function to execute functionality for Smithy card
-	result = handleSmithy(post, p_num, 0);
+	handleSmithy(post, p_num, post->handCount[p_num]--);
 
-	//effects only a single player's deck + hand + discard.
-	//player's hand incremented by 2 and player's hand contains 2+ treasure cards	
+	//ensure correct functionality of handleSmity
+	assert(pre.handCount[p_num] < post->handCount[p_num]);
+	assert(pre.deckCount[p_num] > post->deckCount[p_num]);
 
+	//Smithy card adds 3 cards to hand from deck and discards 1 card from hand
+	pre_handCount = pre.handCount[p_num];
+	post_handCount = post->handCount[p_num];
 
+	//handCount should increase by 2 (3 random cards from deck added, 
+	//	smithy card discarded)
+	assert(post_handCount - pre_handCount == 2);
+
+	return 0;
 }
