@@ -22,6 +22,7 @@ int main(){
 		drawnCard=0;
 		handCount = Game.handCount[currentPlayer];
 		a2Smithy(&currentPlayer, &Game, &drawnCard);
+		printf("Test %d\n\tTesting Player %d's HandCount\nBefore: %d\tAfter: %d\n", i, currentPlayer, handCount, Game.handCount[currentPlayer]);
 	 	assert(Game.handCount[currentPlayer] > handCount);
 	}
 

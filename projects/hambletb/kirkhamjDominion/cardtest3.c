@@ -24,11 +24,12 @@ int main(){
 		result = initializeGame(numPlayer, k, 1, &Game);
 		currentPlayer = whoseTurn(&Game);
 		handCount = Game.handCount[currentPlayer];
-		a2Adventurer(&drawntreasure, &Game, currentPlayer, &cardDrawn, temphand, &tempHandCount);
+		a2Adventurer(&drawntreasure, &Game, &currentPlayer, &cardDrawn, temphand, &tempHandCount);
+		printf("Test %d\n\tTesting Player %d's HandCount\nBefore: %d\tAfter: %d\n", i, currentPlayer, handCount, Game.handCount[currentPlayer]);
 		assert(Game.handCount[currentPlayer] > handCount);
 	}
 
-	 printf("Testing Passed.\n");
+	 printf("Testing Complete.\n");
 	
 	 return 0;
 }
