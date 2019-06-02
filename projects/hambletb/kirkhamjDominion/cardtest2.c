@@ -12,15 +12,16 @@ int main(){
   	int k[10] = {adventurer, council_room, feast, gardens, mine,
 	       remodel, smithy, village, baron, great_hall};
 	int currentPlayer;
-
+	int drawnCard=0;
   	printf("Testing Smithy Card:,\n");
 
 	for(i = 0; i < 1000; i++){
 	    	memset(&Game, -5, sizeof(struct gameState));
 		result = initializeGame(numPlayer, k, 1, &Game);
 		currentPlayer = whoseTurn(&Game);
+		drawnCard=0;
 		handCount = Game.handCount[currentPlayer];
-		handleSmithy(&Game, currentPlayer, 0);
+		a2Smithy(&currentPlayer, &Game, &drawnCard);
 	 	assert(Game.handCount[currentPlayer] > handCount);
 	}
 

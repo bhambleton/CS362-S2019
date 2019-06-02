@@ -12,6 +12,10 @@ int main(){
   	int k[10] = {adventurer, council_room, feast, gardens, mine,
 	       remodel, smithy, village, baron, great_hall};
 	int currentPlayer;
+	int temphand[MAX_HAND];
+	int drawntreasure=0;
+	int tempHandCount = 0;
+	int cardDrawn;
 
   	printf("Testing Adventurer Card:,\n");
 
@@ -20,7 +24,7 @@ int main(){
 		result = initializeGame(numPlayer, k, 1, &Game);
 		currentPlayer = whoseTurn(&Game);
 		handCount = Game.handCount[currentPlayer];
-		handleAdventurer(&Game, currentPlayer, currentPlayer+1);
+		a2Adventurer(&drawntreasure, &Game, currentPlayer, &cardDrawn, temphand, &tempHandCount);
 		assert(Game.handCount[currentPlayer] > handCount);
 	}
 

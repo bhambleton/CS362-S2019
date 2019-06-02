@@ -42,11 +42,12 @@ int checkSmithyCard(int p_num, struct gameState* post){
 	struct gameState pre;
 	int pre_handCount = 0, post_handCount = 0;
 	int pre_discardC = 0, post_discardC = 0;
+	int cardDrawn = 0;
 
 	memcpy(&pre, post, sizeof(struct gameState));
 	
 	//call function to execute functionality for Smithy card
-	handleSmithy(post, p_num, 0);
+	a2Smithy(&p_num, &post, &cardDrawn);
 
 	//ensure correct functionality of handleSmity
 

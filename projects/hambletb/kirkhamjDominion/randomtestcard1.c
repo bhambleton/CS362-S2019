@@ -20,6 +20,10 @@ int main(int argc, char* argv[]){
 	for(i = 0; i < 2400; i++) {
 	    	printf("Test %d\n", i);
 	    	player_num = (rand() % MAX_PLAYERS)+1;
+		int z=0;
+		int temphand[MAX_HAND];
+		int cardDrawn=0;
+		int drawntreasure=0;
 
 		initializeGame(player_num, k, 1, &Game);
 		Game.deckCount[player_num] = floor(Random() * MAX_DECK);
@@ -51,7 +55,7 @@ int checkAdventurerCard(int p_num, struct gameState* post){
 	//call function to execute functionality for Adventurer card
 	//	effects only a single player's deck + hand + discard.
 	//	player's hand incremented by 2 and player's hand contains 2+ treasure cards	
-	handleAdventurer(post, p_num, 0);
+	a2Adventurer(&drawntreasure, &post, p_num, &cardDrawn, temphand, &z);
 
 	//get number of treasure cards after call to adventurer in cardEffect
 	for(i = 0; i < post->handCount[p_num]; i++){
